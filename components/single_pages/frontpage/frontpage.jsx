@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Login from '../../shared/login';
+import Login from '../../shared/Login';
 
 const Wrapper = styled.div`
     width: 100%;
