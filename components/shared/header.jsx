@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import Login from './Login';
 
 const HeaderWrapper = styled.div`
     position: absolute;
@@ -65,17 +66,43 @@ const LoginButton = styled.button`
 `
 
 class Header extends Component{
-   render(){
-      return(
-         <HeaderWrapper>
-             <HeaderLogo>CasuChat</HeaderLogo>
-             <HeaderRightWrap>
-                 <LoginText>Already got an account ?</LoginText>
-                 <LoginButton>Login</LoginButton>
-             </HeaderRightWrap>
-         </HeaderWrapper>
-      );
-   }
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showLoginBox: false
+        }
+
+        this.showLoginBox = this.showLoginBox.bind(this);
+        this.hideLoginBox = this.hideLoginBox.bind(this);
+    }
+
+    showLoginBox() {
+        this.setState({
+            showLoginBox: true
+        })
+    }
+
+    hideLoginBox() {
+        this.setState({
+            showLoginBox: false
+        })
+    }
+
+    render(){
+        return(
+            <>
+                <Login show={this.state.showLoginBox} hideLoginBox={this.hideLoginBox} />
+                <HeaderWrapper>
+                    <HeaderLogo>CasuChat</HeaderLogo>
+                    <HeaderRightWrap>
+                        <LoginText>Already got an account ?</LoginText>
+                        <LoginButton onClick={this.showLoginBox}>Login</LoginButton>
+                    </HeaderRightWrap>
+                </HeaderWrapper>
+            </>
+        );
+    }
 }
 
 export default Header;

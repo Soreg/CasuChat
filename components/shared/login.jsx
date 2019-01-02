@@ -1,32 +1,32 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
-const LoginWrapper = styled.div`
-    width: 300px;
+const Overlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0, 0.6);
+    z-index: 1000;
 `;
 
-const Form = styled.form`
-    opacity: 0;
-    transform: translateY(-15px);
-    transition: all ease .8s;
+const LoginForm = styled.form`
 
-    &.show {
-        transform: translateY(0);
-        opacity: 1;
-    }
 `;
 
-const SignupForm = styled.div`
+const LoginContainer = styled.div`
     background: #fff;
-    box-shadow: -7px 6px 5px 0px rgba(0,0,0, 0.4);
-    display: flex;
-    flex-direction: column;
+    position: fixed;
+    top: 45%
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    z-index: 2000;
     padding-bottom: 15px;
 `;
 
-const FormHeadline = styled.h2`
+const Headline = styled.h2`
     border-bottom: 1px solid #ccc;
     width: 90%;
     margin: 0 auto 30px;
@@ -34,6 +34,7 @@ const FormHeadline = styled.h2`
     color: #e79e18;
     font-weight: bold;
     font-size: 28px;
+    text-align: center;
 `;
 
 const InputWrapper = styled.div`
@@ -51,48 +52,32 @@ const Input = styled.input`
     padding-left: 5px;
 `;
 
-const StyledDatePicker = styled(DatePicker)`
-    width: 100%;
-    margin: 0 auto 20px;
-    height: 24px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    outline-color: #e79e18;
-    box-sizing: border-box;
-    padding-left: 5px;
-`;
-
-const Button = styled.button`
-
+const SubmitButton = styled.button`
     &,
     &:focus {
+        position: absolute;
+        top: calc(45% + 100px);
+        left: 50%;
+        transform: translate(-50%, -50%);
         border: none;
         cursor: pointer; 
-        width: 300px;
+        width: 350px;
         height: 30px;
         background: #e79e18;
         color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: -7px 6px 5px 0px rgba(0,0,0, 0.4);
-        margin-top: 13px;
+        margin-top: 15px;
         font-size: 22px;
         outline: 0;
         user-select: none;
-        transition: all ease .3s;
-    }
-
-    &:hover {
-        transform: translateY(-2px);
-        box-shadow: -8px 8px 5px 2px rgba(0,0,0, 0.2);
+        z-index: 2000;
     }
 
     &:active {
         border: none;
         outline: 0;
-        transform: translateY(-1px);
-        box-shadow: -5px 4px 5px 0px rgba(0,0,0, 0.7);
     }
 `;
 
@@ -101,29 +86,13 @@ class Login extends Component{
         super(props);
 
         this.state = {
-            show: false,
             username: '',
-            email: '',
-            password: '',
-            passwordRepeat: '',
-            birthday: new Date()
+            password: ''
         }
 
-        this.signup = this.signup.bind(this);
         this.inputChanged = this.inputChanged.bind(this);
-        this.pickDate = this.pickDate.bind(this);
-    }
-
-    componentDidMount() {
-        this.timeoutLoginBox = setTimeout(() => {
-            this.setState({
-                show: true
-            })
-        }, 10)
-    }
-
-    componentWillUnmount() {
-        clearTimeout(this.timeoutLoginBox)
+        this.doLogin = this.doLogin.bind(this);
+        this.hideLoginBox = this.hideLoginBox.bind(this);
     }
 
     inputChanged(e) {
@@ -132,37 +101,38 @@ class Login extends Component{
         })
     }
 
-pickDate(date) {
-    this.setState({
-        birthday: date
-    })
-}
-
-    signup(e) {
+    doLogin(e) {
         e.preventDefault();
     }
 
+    hideLoginBox() {
+        if(this.state.username || this.state.password) {
+            this.setState({
+                username: '',
+                password: ''
+            })
+        }
+        this.props.hideLoginBox();
+    }
+
     render(){
-        return( 
-            <LoginWrapper>
-                <Form className={this.state.show ? 'show' : ''} onSubmit={this.signup}>
-                    <SignupForm>
-                        <FormHeadline>
-                            Sign up
-                        </FormHeadline>
+        return this.props.show ? ( 
+            <>
+                <Overlay onClick={this.hideLoginBox} />
+                <LoginForm>
+                    <LoginContainer>
+                        <Headline>Login</Headline>
                         <InputWrapper>
-                            <Input name="username" placeholder="Username" value={this.state.username} onChange={this.inputChanged} />
-                            <Input name="email" placeholder="E-Mail" value={this.state.email} onChange={this.inputChanged} />
-                            <Input name="password" placeholder="Password" value={this.state.password} onChange={this.inputChanged} />
-                            <Input name="passwordRepeat" placeholder="Confirm Password" value={this.state.passwordRepeat} onChange={this.inputChanged} />
-                            <StyledDatePicker selected={this.state.birthday} onChange={this.pickDate} />
+                            <Input name='username' placeholder="Username" value={this.state.username} onChange={this.inputChanged} />
+                            <Input name='password' placeholder="Password" value={this.state.password} onChange={this.inputChanged} />
                         </InputWrapper>
-                    </SignupForm>
-                    <Button>Sign up</Button>
-                </Form>
-            </LoginWrapper>
-        );
+                    </LoginContainer>
+                    <SubmitButton onClick={this.doLogin}>Login</SubmitButton>
+                </LoginForm>
+            </>
+        )
+        : null;
     }
-    }
+}
 
 export default Login;
