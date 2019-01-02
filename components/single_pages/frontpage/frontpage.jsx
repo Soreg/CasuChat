@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Login from '../../shared/Login';
+import Signup from './Signup';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -59,7 +59,7 @@ class Frontpage extends Component{
                 </LeftWrap>
 
                 <RightWrap>
-                    <Login />
+                    <Signup />
                 </RightWrap>
               </InnerWrapper>
           </Wrapper>
