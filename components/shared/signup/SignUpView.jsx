@@ -127,7 +127,7 @@ class Login extends Component{
 
     inputChanged(e) {
         this.setState({
-            [e.currentTarget.name]: [e.currentTarget.value]
+            [e.currentTarget.name]: e.currentTarget.value
         })
     }
 
@@ -139,6 +139,11 @@ class Login extends Component{
 
     signup(e) {
         e.preventDefault();
+        const { username, email, password, passwordRepeat } = this.state;
+        
+        // Handle form validation
+        // Signup if success
+        this.props.onSubmit(e, username, email, password, passwordRepeat);
     }
 
     render(){
