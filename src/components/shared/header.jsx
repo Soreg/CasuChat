@@ -8,7 +8,7 @@ const HeaderWrapper = styled.div`
     left: 0;
     width: 100%;
     height: 130px;
-    background-image: url('./img/headerBg.png');
+    background-image: url('./src/img/headerBg.png');
     display: flex;
     justify-content: flex-end;
     align-items: center;
