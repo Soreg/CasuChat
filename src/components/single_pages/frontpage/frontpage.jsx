@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Signup from '../../shared/signup/index';
-import { FirebaseContext } from '../../Firebase';
+import { withFirebase } from '../../Firebase';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -47,7 +47,7 @@ const Icon = styled.img`
 
 `;
 
-class Frontpage extends Component{
+class Frontpage extends Component {
    render(){
       return(
           <Wrapper>
@@ -60,14 +60,14 @@ class Frontpage extends Component{
                 </LeftWrap>
 
                 <RightWrap>
-                    <FirebaseContext.Consumer>
-                            {firebase => <Signup firebase={firebase} />}
-                    </FirebaseContext.Consumer>
+                    <SignUpForm />
                 </RightWrap>
               </InnerWrapper>
           </Wrapper>
       );
    }
 }
+
+const SignUpForm = withFirebase(Signup);
 
 export default Frontpage;

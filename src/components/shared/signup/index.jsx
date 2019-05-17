@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import SignUpView from "./SignUpView";
+import { Link, withRouter } from 'react-router-dom';
+import * as ROUTES from '../../../constants/routes';
 
 const INITIAL_STATE = {
     show: false,
@@ -60,10 +62,10 @@ class SignUpContainer extends Component {
             this.props.firebase
             .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
             .then(authUser => {
-              this.setState({ ...INITIAL_STATE });
+                this.setState({ ...INITIAL_STATE });
             })
             .catch(error => {
-              this.setState({ error });
+                this.setState({ error });
             });
         }
     };
@@ -73,4 +75,4 @@ class SignUpContainer extends Component {
     }
 }
 
-export default SignUpContainer;
+export default withRouter(SignUpContainer);
