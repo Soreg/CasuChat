@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Signup from '../../shared/signup/index';
 import { withFirebase } from '../../Firebase';
+import Header from '../../shared/header';
+import Footer from '../../shared/footer';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -50,20 +52,24 @@ const Icon = styled.img`
 class Frontpage extends Component {
    render(){
       return(
-          <Wrapper>
-              <InnerWrapper>
-                <LeftWrap>
-                    <Headline>CasuChat lets you chat with people from all around the globe. Sign up now and start chatting!</Headline>
-                    <Subtitle>Chat with people from all around the world</Subtitle>
-                    <Subtitle>Add friends and stay in touch</Subtitle>
-                    <Subtitle>Messages are saved - Read unread messages when you get back online</Subtitle>
-                </LeftWrap>
+          <>
+            <Header />
+            <Wrapper>
+                <InnerWrapper>
+                    <LeftWrap>
+                        <Headline>CasuChat lets you chat with people from all around the globe. Sign up now and start chatting!</Headline>
+                        <Subtitle>Chat with people from all around the world</Subtitle>
+                        <Subtitle>Add friends and stay in touch</Subtitle>
+                        <Subtitle>Messages are saved - Read unread messages when you get back online</Subtitle>
+                    </LeftWrap>
 
-                <RightWrap>
-                    <SignUpForm />
-                </RightWrap>
-              </InnerWrapper>
-          </Wrapper>
+                    <RightWrap>
+                        <SignUpForm />
+                    </RightWrap>
+                </InnerWrapper>
+            </Wrapper>
+            <Footer />
+          </>
       );
    }
 }
