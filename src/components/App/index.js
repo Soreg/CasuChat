@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
 import Frontpage from '../single_pages/frontpage/Frontpage';
-import AccountPage from '../Account/';
+import AccountPage from '../Account';
+import { AuthUserContext } from '../Session'
 
 class App extends Component{
    constructor(props) {
@@ -29,10 +30,12 @@ class App extends Component{
    render(){
       return(
          <div>
-             <Router>
-             <Route exact path={ROUTES.LANDING} component={Frontpage} authUser={this.state.authUser} />
-             <Route path={ROUTES.ACCOUNT} component={AccountPage} authUser={this.state.authUser} />
-             </Router>
+            <AuthUserContext.Provider>
+               <Router>
+               <Route exact path={ROUTES.LANDING} component={Frontpage} authUser={this.state.authUser} />
+               <Route path={ROUTES.ACCOUNT} component={AccountPage} authUser={this.state.authUser} />
+               </Router>
+             </AuthUserContext.Provider>
          </div>
       );
    }
