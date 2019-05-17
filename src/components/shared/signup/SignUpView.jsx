@@ -117,9 +117,9 @@ class Login extends Component{
                         </FormHeadline>
                         <InputWrapper>
                             <Input name="inputUsername" placeholder="Username" value={inputUsername} onChange={this.props.inputChanged} />
-                            <Input name="inputEmail" placeholder="E-Mail" value={inputEmail} onChange={this.props.inputChanged} />
-                            <Input name="inputPassword" placeholder="Password" value={inputPassword} onChange={this.props.inputChanged} />
-                            <Input name="inputPasswordRepeat" placeholder="Confirm Password" value={inputPasswordRepeat} onChange={this.props.inputChanged} />
+                            <Input name="inputEmail" type="email" placeholder="E-Mail" value={inputEmail} onChange={this.props.inputChanged} />
+                            <Input name="inputPassword" type="password" placeholder="Password" value={inputPassword} onChange={this.props.inputChanged} />
+                            <Input name="inputPasswordRepeat" type="password" placeholder="Confirm Password" value={inputPasswordRepeat} onChange={this.props.inputChanged} />
                             <StyledDatePicker selected={inputBirthday} onChange={this.props.pickDate} />
                         </InputWrapper>
                     </SignupForm>
@@ -128,6 +128,6 @@ class Login extends Component{
             </LoginWrapper>
         );
     }
-    }
+}
 
 export default Login;

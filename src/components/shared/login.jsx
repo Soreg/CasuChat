@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const LoginWrapper = styled.div`
-    ${props => props.show ? 'display: block' : 'display: none'};
+    ${props => props.show ? 'visibility: visible; opacity: 1;' : 'visibility: hidden; opacity: 0;'}
+    transition: all ease .5s;
 `;
 
 const Overlay = styled.div`
@@ -108,19 +109,21 @@ class Login extends Component{
     doLogin(e) {
         e.preventDefault();
         const { email, password } = this.state;
-        
-        this.props.firebase
-        .doSignInWithEmailAndPassword(email, password)
-        .then(() => {
-          this.setState({ 
-                email: '',
-              password: ''
-           });
-           this.props.hideLoginBox();
-        })
-        .catch(error => {
-          this.setState({ error });
-        });
+
+        if(email && password) {
+            this.props.firebase
+            .doSignInWithEmailAndPassword(email, password)
+            .then(() => {
+              this.setState({ 
+                    email: '',
+                  password: ''
+               });
+               this.props.hideLoginBox();
+            })
+            .catch(error => {
+              this.setState({ error });
+            });
+        }
     }
 
     hideLoginBox() {
@@ -141,8 +144,8 @@ class Login extends Component{
                     <LoginContainer>
                         <Headline>Login</Headline>
                         <InputWrapper>
-                            <Input name='email' placeholder="Email" value={this.state.email} onChange={this.inputChanged} />
-                            <Input name='password' placeholder="Password" value={this.state.password} onChange={this.inputChanged} />
+                            <Input name='email' type='email' placeholder="Email" value={this.state.email} onChange={this.inputChanged} />
+                            <Input name='password' type='password' placeholder="Password" value={this.state.password} onChange={this.inputChanged} />
                         </InputWrapper>
                     </LoginContainer>
                     <SubmitButton onClick={this.doLogin}>Login</SubmitButton>
