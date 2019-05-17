@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
 import styled from 'styled-components';
 import Login from './Login';
+import { AuthUserContext } from '../Session';
+import { th } from 'date-fns/esm/locale';
 
 const HeaderWrapper = styled.div`
     position: absolute;
@@ -66,6 +68,10 @@ const LoginButton = styled.button`
     }
 `
 
+const LogoutButton = styled(LoginButton)`
+
+`;
+
 class Header extends Component{
     constructor(props) {
         super(props);
@@ -90,15 +96,26 @@ class Header extends Component{
         })
     }
 
-    render(){
+    render() {
+        const { firebase } = this.props;
         return(
             <>
                 <LoginForm show={this.state.showLoginBox} hideLoginBox={this.hideLoginBox} />
                 <HeaderWrapper>
                     <HeaderLogo>CasuChat</HeaderLogo>
                     <HeaderRightWrap>
-                        <LoginText>Already got an account ?</LoginText>
-                        <LoginButton onClick={this.showLoginBox}>Login</LoginButton>
+                        <AuthUserContext.Consumer>
+                        {authUser =>
+                            authUser ? (
+                                <LogoutButton onClick={firebase.doSignOut}>Logout</LogoutButton>
+                            ) : (
+                                <>
+                                    <LoginText>Already got an account ?</LoginText>
+                                    <LoginButton onClick={this.showLoginBox}>Login</LoginButton>
+                                </>
+                            )
+                        }
+                        </AuthUserContext.Consumer>
                     </HeaderRightWrap>
                 </HeaderWrapper>
             </>

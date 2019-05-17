@@ -57,7 +57,7 @@ class Frontpage extends Component {
    render(){
       return(
           <>
-            <Header />
+            <Head />
             <Wrapper>
                 <InnerWrapper>
                     <LeftWrap>
@@ -78,6 +78,7 @@ class Frontpage extends Component {
    }
 }
 
+const Head = withFirebase(Header);
 const SignUpForm = withFirebase(Signup);
 
 export default Frontpage;

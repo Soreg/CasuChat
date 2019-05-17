@@ -30,7 +30,7 @@ class App extends Component{
    render(){
       return(
          <div>
-            <AuthUserContext.Provider>
+            <AuthUserContext.Provider value={this.state.authUser}>
                <Router>
                <Route exact path={ROUTES.LANDING} component={Frontpage} authUser={this.state.authUser} />
                <Route path={ROUTES.ACCOUNT} component={AccountPage} authUser={this.state.authUser} />
