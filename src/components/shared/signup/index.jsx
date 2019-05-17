@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import SignUpView from "./SignUpView";
+import { Link, withRouter } from 'react-router-dom';
+import * as ROUTES from '../../../constants/routes';
 
 const INITIAL_STATE = {
     show: false,
@@ -47,16 +49,25 @@ class SignUpContainer extends Component {
 
     handleSignUp = (e) => {
         e.preventDefault();
-        const { inputEmail, inputPassword } = this.state;
+        const { inputUsername, inputEmail, inputPassword, inputPasswordRepeat } = this.state;
+
+        const isInvalid =
+        inputPassword !== inputPasswordRepeat ||
+        inputPassword === '' ||
+        inputEmail === '' ||
+        inputUsername === '';
         
-        this.props.firebase
-        .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
-        .then(authUser => {
-          this.setState({ ...INITIAL_STATE });
-        })
-        .catch(error => {
-          this.setState({ error });
-        });
+        // If passwords match, create account
+        if(!isInvalid) {
+            this.props.firebase
+            .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
+            .then(authUser => {
+                this.setState({ ...INITIAL_STATE });
+            })
+            .catch(error => {
+                this.setState({ error });
+            });
+        }
     };
 
     render() {
@@ -64,4 +75,4 @@ class SignUpContainer extends Component {
     }
 }
 
-export default SignUpContainer;
+export default withRouter(SignUpContainer);
