@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+const LoginWrapper = styled.div`
+    ${props => props.show ? 'display: block' : 'display: none'};
+`;
+
 const Overlay = styled.div`
     position: fixed;
     top: 0;
@@ -18,7 +22,7 @@ const LoginForm = styled.form`
 const LoginContainer = styled.div`
     background: #fff;
     position: fixed;
-    top: 45%
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 350px;
@@ -55,7 +59,7 @@ const Input = styled.input`
 const SubmitButton = styled.button`
     &,
     &:focus {
-        position: absolute;
+        position: fixed;
         top: calc(45% + 100px);
         left: 50%;
         transform: translate(-50%, -50%);
@@ -86,7 +90,7 @@ class Login extends Component{
         super(props);
 
         this.state = {
-            username: '',
+            email: '',
             password: ''
         }
 
@@ -97,18 +101,32 @@ class Login extends Component{
 
     inputChanged(e) {
         this.setState({
-            [e.currentTarget.name]: [e.currentTarget.value]
+            [e.currentTarget.name]: e.currentTarget.value
         })
     }
 
     doLogin(e) {
         e.preventDefault();
+        const { email, password } = this.state;
+        
+        this.props.firebase
+        .doSignInWithEmailAndPassword(email, password)
+        .then(() => {
+          this.setState({ 
+                email: '',
+              password: ''
+           });
+           this.props.hideLoginBox();
+        })
+        .catch(error => {
+          this.setState({ error });
+        });
     }
 
     hideLoginBox() {
-        if(this.state.username || this.state.password) {
+        if(this.state.email || this.state.password) {
             this.setState({
-                username: '',
+                email: '',
                 password: ''
             })
         }
@@ -116,22 +134,21 @@ class Login extends Component{
     }
 
     render(){
-        return this.props.show ? ( 
-            <>
+        return ( 
+            <LoginWrapper show={this.props.show}>
                 <Overlay onClick={this.hideLoginBox} />
                 <LoginForm>
                     <LoginContainer>
                         <Headline>Login</Headline>
                         <InputWrapper>
-                            <Input name='username' placeholder="Username" value={this.state.username} onChange={this.inputChanged} />
+                            <Input name='email' placeholder="Email" value={this.state.email} onChange={this.inputChanged} />
                             <Input name='password' placeholder="Password" value={this.state.password} onChange={this.inputChanged} />
                         </InputWrapper>
                     </LoginContainer>
                     <SubmitButton onClick={this.doLogin}>Login</SubmitButton>
                 </LoginForm>
-            </>
-        )
-        : null;
+            </LoginWrapper>
+        );
     }
 }
 
