@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FirebaseContext } from '../Firebase';
 import styled from 'styled-components';
 import Login from './Login';
 
@@ -92,7 +93,9 @@ class Header extends Component{
     render(){
         return(
             <>
-                <Login show={this.state.showLoginBox} hideLoginBox={this.hideLoginBox} />
+                <FirebaseContext.Consumer>
+                    {firebase => <Login show={this.state.showLoginBox} hideLoginBox={this.hideLoginBox} firebase={firebase} />}
+                </FirebaseContext.Consumer>
                 <HeaderWrapper>
                     <HeaderLogo>CasuChat</HeaderLogo>
                     <HeaderRightWrap>

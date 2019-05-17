@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Signup from '../../shared/signup/index';
+import { FirebaseContext } from '../../Firebase';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -59,7 +60,9 @@ class Frontpage extends Component{
                 </LeftWrap>
 
                 <RightWrap>
-                    <Signup />
+                    <FirebaseContext.Consumer>
+                            {firebase => <Signup firebase={firebase} />}
+                    </FirebaseContext.Consumer>
                 </RightWrap>
               </InnerWrapper>
           </Wrapper>

@@ -1,29 +1,66 @@
 import React, { Component } from "react";
-import base from "../../shared/base";
-
 import SignUpView from "./SignUpView";
 
+const INITIAL_STATE = {
+    show: false,
+    inputUsername: '',
+    inputEmail: '',
+    inputPassword: '',
+    inputPasswordRepeat: '',
+    inputBirthday: new Date()
+  };
+  
+
 class SignUpContainer extends Component {
-    handleSignUp = async(e, username, email, password, date) => {
-        e.preventDefault();
-        try {
-            const user = await base
-            .auth()
-            .createUserWithEmailAndPassword(email, password);
-            base.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                  user.updateProfile({
-                    displayName: username,
-                  });     
-                }
+    constructor(props) {
+        super(props);
+
+        this.state = { ...INITIAL_STATE };
+
+        this.inputChanged = this.inputChanged.bind(this);
+        this.pickDate = this.pickDate.bind(this);
+    }
+
+    componentDidMount() {
+        this.timeoutLoginBox = setTimeout(() => {
+            this.setState({
+                show: true
             })
-        } catch (error) {
-            alert(error);
-        }
+        }, 10)
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeoutLoginBox)
+    }
+
+    inputChanged(e) {
+        this.setState({
+            [e.currentTarget.name]: e.currentTarget.value
+        })
+    }
+
+    pickDate(date) {
+        this.setState({
+            birthday: date
+        })
+    }
+
+    handleSignUp = (e) => {
+        e.preventDefault();
+        const { inputEmail, inputPassword } = this.state;
+        
+        this.props.firebase
+        .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
+        .then(authUser => {
+          this.setState({ ...INITIAL_STATE });
+        })
+        .catch(error => {
+          this.setState({ error });
+        });
     };
 
     render() {
-        return <SignUpView onSubmit={this.handleSignUp} />;
+        return <SignUpView onSubmit={this.handleSignUp} inputChanged={this.inputChanged} pickDate={this.pickDate} {...this.state} />;
     }
 }
 

@@ -96,70 +96,31 @@ const Button = styled.button`
 `;
 
 class Login extends Component{
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            show: false,
-            username: '',
-            email: '',
-            password: '',
-            passwordRepeat: '',
-            birthday: new Date()
-        }
-
-        this.signup = this.signup.bind(this);
-        this.inputChanged = this.inputChanged.bind(this);
-        this.pickDate = this.pickDate.bind(this);
-    }
-
-    componentDidMount() {
-        this.timeoutLoginBox = setTimeout(() => {
-            this.setState({
-                show: true
-            })
-        }, 10)
-    }
-
-    componentWillUnmount() {
-        clearTimeout(this.timeoutLoginBox)
-    }
-
-    inputChanged(e) {
-        this.setState({
-            [e.currentTarget.name]: e.currentTarget.value
-        })
-    }
-
-    pickDate(date) {
-        this.setState({
-            birthday: date
-        })
-    }
-
-    signup(e) {
-        e.preventDefault();
-        const { username, email, password, passwordRepeat } = this.state;
-        
-        // Handle form validation
-        // Signup if success
-        this.props.onSubmit(e, username, email, password, passwordRepeat);
-    }
-
     render(){
+
+        const { 
+            show, 
+            inputUsername, 
+            inputEmail, 
+            inputPassword,
+            inputPasswordRepeat, 
+            inputBirthday
+
+         } = this.props;
+
         return( 
             <LoginWrapper>
-                <Form className={this.state.show ? 'show' : ''} onSubmit={this.signup}>
+                <Form className={show ? 'show' : ''} onSubmit={(e) => this.props.onSubmit(e)}>
                     <SignupForm>
                         <FormHeadline>
                             Sign up
                         </FormHeadline>
                         <InputWrapper>
-                            <Input name="username" placeholder="Username" value={this.state.username} onChange={this.inputChanged} />
-                            <Input name="email" placeholder="E-Mail" value={this.state.email} onChange={this.inputChanged} />
-                            <Input name="password" placeholder="Password" value={this.state.password} onChange={this.inputChanged} />
-                            <Input name="passwordRepeat" placeholder="Confirm Password" value={this.state.passwordRepeat} onChange={this.inputChanged} />
-                            <StyledDatePicker selected={this.state.birthday} onChange={this.pickDate} />
+                            <Input name="inputUsername" placeholder="Username" value={inputUsername} onChange={this.props.inputChanged} />
+                            <Input name="inputEmail" placeholder="E-Mail" value={inputEmail} onChange={this.props.inputChanged} />
+                            <Input name="inputPassword" placeholder="Password" value={inputPassword} onChange={this.props.inputChanged} />
+                            <Input name="inputPasswordRepeat" placeholder="Confirm Password" value={inputPasswordRepeat} onChange={this.props.inputChanged} />
+                            <StyledDatePicker selected={inputBirthday} onChange={this.props.pickDate} />
                         </InputWrapper>
                     </SignupForm>
                     <Button>Sign up</Button>
