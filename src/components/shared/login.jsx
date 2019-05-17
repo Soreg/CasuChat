@@ -4,8 +4,16 @@ import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 
 const LoginWrapper = styled.div`
-    ${props => props.show ? 'visibility: visible; opacity: 1;' : 'visibility: hidden; opacity: 0;'}
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0, 0.6);
+    visibility: ${props => props.show ? "visible" : "hidden"};
+    opacity: ${props => props.show ? "1" : "0"};
     transition: all ease .5s;
+    z-index: 1000;
 `;
 
 const Overlay = styled.div`
@@ -14,8 +22,6 @@ const Overlay = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0, 0.6);
-    z-index: 1000;
 `;
 
 const LoginForm = styled.form`
