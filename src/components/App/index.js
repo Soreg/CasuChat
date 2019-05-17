@@ -7,6 +7,7 @@ import * as ROUTES from '../../constants/routes';
 import Header from '../shared/Header';
 import Footer from '../shared/Footer';
 import Frontpage from '../single_pages/frontpage/Frontpage';
+import AccountPage from '../Account/';
 import "babel-polyfill";
 
 class App extends Component{
@@ -16,7 +17,8 @@ class App extends Component{
              <Header />
 
              <Router>
-               <Route exact path={ROUTES.LANDING} component={Frontpage} />
+             <Route exact path={ROUTES.LANDING} component={Frontpage} />
+             <Route path={ROUTES.ACCOUNT} component={AccountPage} />
              </Router>
 
              <Footer />

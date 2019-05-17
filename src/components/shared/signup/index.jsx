@@ -63,6 +63,7 @@ class SignUpContainer extends Component {
             .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
             .then(authUser => {
                 this.setState({ ...INITIAL_STATE });
+                this.props.history.push(ROUTES.ACCOUNT);
             })
             .catch(error => {
                 this.setState({ error });

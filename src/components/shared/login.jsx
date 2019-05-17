@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Link, withRouter } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 
 const LoginWrapper = styled.div`
     ${props => props.show ? 'visibility: visible; opacity: 1;' : 'visibility: hidden; opacity: 0;'}
@@ -119,6 +121,7 @@ class Login extends Component{
                   password: ''
                });
                this.props.hideLoginBox();
+               this.props.history.push(ROUTES.ACCOUNT);
             })
             .catch(error => {
               this.setState({ error });
