@@ -47,16 +47,25 @@ class SignUpContainer extends Component {
 
     handleSignUp = (e) => {
         e.preventDefault();
-        const { inputEmail, inputPassword } = this.state;
+        const { inputUsername, inputEmail, inputPassword, inputPasswordRepeat } = this.state;
+
+        const isInvalid =
+        inputPassword !== inputPasswordRepeat ||
+        inputPassword === '' ||
+        inputEmail === '' ||
+        inputUsername === '';
         
-        this.props.firebase
-        .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
-        .then(authUser => {
-          this.setState({ ...INITIAL_STATE });
-        })
-        .catch(error => {
-          this.setState({ error });
-        });
+        // If passwords match, create account
+        if(!isInvalid) {
+            this.props.firebase
+            .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
+            .then(authUser => {
+              this.setState({ ...INITIAL_STATE });
+            })
+            .catch(error => {
+              this.setState({ error });
+            });
+        }
     };
 
     render() {
