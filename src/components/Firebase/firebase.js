@@ -17,6 +17,7 @@ const config = {
       }
 
       this.auth = app.auth();
+      console.log(this.auth);
     }
 
     doCreateUserWithEmailAndPassword = (email, password) =>

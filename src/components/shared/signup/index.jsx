@@ -1,19 +1,21 @@
 import React, { Component } from "react";
-
 import SignUpView from "./SignUpView";
+
+const INITIAL_STATE = {
+    show: false,
+    inputUsername: '',
+    inputEmail: '',
+    inputPassword: '',
+    inputPasswordRepeat: '',
+    inputBirthday: new Date()
+  };
+  
 
 class SignUpContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            show: false,
-            inputUsername: '',
-            inputEmail: '',
-            inputPassword: '',
-            inputPasswordRepeat: '',
-            inputBirthday: new Date()
-        }
+        this.state = { ...INITIAL_STATE };
 
         this.inputChanged = this.inputChanged.bind(this);
         this.pickDate = this.pickDate.bind(this);
@@ -43,8 +45,18 @@ class SignUpContainer extends Component {
         })
     }
 
-    handleSignUp = async(e, username, email, password, date) => {
-
+    handleSignUp = (e) => {
+        e.preventDefault();
+        const { inputEmail, inputPassword } = this.state;
+        
+        this.props.firebase
+        .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
+        .then(authUser => {
+          this.setState({ ...INITIAL_STATE });
+        })
+        .catch(error => {
+          this.setState({ error });
+        });
     };
 
     render() {

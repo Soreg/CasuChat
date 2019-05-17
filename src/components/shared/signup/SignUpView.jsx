@@ -110,7 +110,7 @@ class Login extends Component{
 
         return( 
             <LoginWrapper>
-                <Form className={show ? 'show' : ''} onSubmit={this.props.submit}>
+                <Form className={show ? 'show' : ''} onSubmit={(e) => this.props.onSubmit(e)}>
                     <SignupForm>
                         <FormHeadline>
                             Sign up
