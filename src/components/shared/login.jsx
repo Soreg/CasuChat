@@ -88,7 +88,7 @@ const SubmitButton = styled.button`
     }
 `;
 
-class Login extends Component{
+class Login extends Component {
     constructor(props) {
         super(props);
 
@@ -158,4 +158,4 @@ class Login extends Component{
     }
 }
 
-export default Login;
+export default withRouter(Login);
