@@ -6,7 +6,6 @@ import {
 import * as ROUTES from '../../constants/routes';
 import Frontpage from '../single_pages/frontpage/Frontpage';
 import AccountPage from '../Account/';
-import "babel-polyfill";
 
 class App extends Component{
    render(){
