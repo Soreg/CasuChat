@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
-import Frontpage from '../single_pages/frontpage/Frontpage';
+import Frontpage from '../single_pages/frontpage/frontpage';
 import AccountPage from '../Account';
 import { AuthUserContext } from '../Session'
 

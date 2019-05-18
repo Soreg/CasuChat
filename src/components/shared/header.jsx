@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
 import styled from 'styled-components';
-import Login from './Login';
+import Login from './login';
 import { AuthUserContext } from '../Session';
 import { th } from 'date-fns/esm/locale';
 
