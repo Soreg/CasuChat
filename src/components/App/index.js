@@ -33,11 +33,14 @@ class App extends Component{
             <AuthUserContext.Provider value={this.state.authUser}>
                <Router>
                <Route exact path={ROUTES.LANDING} component={Frontpage} authUser={this.state.authUser} />
-               <Route path={ROUTES.ACCOUNT} component={AccountPage} authUser={this.state.authUser} />
+               <Route path={ROUTES.ACCOUNT} component={AccountPageView} authUser={this.state.authUser} />
                </Router>
              </AuthUserContext.Provider>
          </div>
       );
    }
 }
+
+const AccountPageView = withFirebase(AccountPage);
+
 export default withFirebase(App);
