@@ -62,6 +62,11 @@ class SignUpContainer extends Component {
             this.props.firebase
             .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
             .then(authUser => {
+                if(authUser) {
+                    authUser.user.updateProfile({
+                        displayName: inputUsername
+                    })
+                }
                 this.setState({ ...INITIAL_STATE });
                 this.props.history.push(ROUTES.ACCOUNT);
             })

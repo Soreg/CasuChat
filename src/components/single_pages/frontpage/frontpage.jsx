@@ -52,7 +52,6 @@ const Icon = styled.img`
 class Frontpage extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
     }
    render(){
       return(
