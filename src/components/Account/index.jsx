@@ -20,7 +20,11 @@ class AccountPage extends Component{
     }
 
     render(){
-        return(
+        const { firebase } = this.props;
+        const auth = firebase ? firebase.auth : null;
+        const user = auth && auth.currentUser ? auth.currentUser : null;
+
+        return user && (
             <>
                 <Head />
                 <AccountPageWrapper>
@@ -32,12 +36,12 @@ class AccountPage extends Component{
                             <MultiView border>
                                 <MultiViewHeadline>Account</MultiViewHeadline>
                                 <SettingsLineWrapper>
-                                    <InfoLine>Username: </InfoLine>
+                                    <InfoLine>Username: {user.displayName ? user.displayName : 'not set'}</InfoLine>
                                     <UnderlinedButton>Edit</UnderlinedButton>
                                 </SettingsLineWrapper>
 
                                 <SettingsLineWrapper>
-                                    <InfoLine>Email (Not visible to others): </InfoLine>
+                                    <InfoLine>Email (Not visible to others): {user.email}</InfoLine>
                                     <UnderlinedButton>Edit</UnderlinedButton>
                                 </SettingsLineWrapper>
                             </MultiView>
