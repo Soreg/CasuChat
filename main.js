@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './src/components/App/index.js';
 import Firebase, { FirebaseContext } from './src/components/Firebase';
+import './reset.css';
 
 ReactDOM.render(
     <FirebaseContext.Provider value={new Firebase()}>

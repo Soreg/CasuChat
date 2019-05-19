@@ -26,12 +26,8 @@ module.exports = {
             },
          },
          {
-            test: /\.css?$/,
-            include: /node_modules/,  
-            loaders: ['style-loader', 'css-loader'],
-            resolve: {
-                extensions: [".css"]
-            },
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader'],
          }
       ]
    },
