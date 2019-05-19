@@ -3,7 +3,7 @@ import { withFirebase } from '../Firebase';
 import styled from 'styled-components';
 import Login from './login';
 import { AuthUserContext } from '../Session';
-import { th } from 'date-fns/esm/locale';
+import HeaderBg from '../../img/headerBg.png'
 
 const HeaderWrapper = styled.div`
     position: absolute;
@@ -11,7 +11,7 @@ const HeaderWrapper = styled.div`
     left: 0;
     width: 100%;
     height: 130px;
-    background-image: url('/src/img/headerBg.png');
+    background-image: url(${HeaderBg});
     display: flex;
     justify-content: flex-end;
     align-items: center;
