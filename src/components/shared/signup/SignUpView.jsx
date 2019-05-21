@@ -34,6 +34,7 @@ const FormHeadline = styled.h2`
     color: #e79e18;
     font-weight: bold;
     font-size: 28px;
+    font-family: 'Nunito', sans-serif;
 `;
 
 const InputWrapper = styled.div`
@@ -122,16 +123,16 @@ class Login extends Component{
                         </FormHeadline>
                         <InputWrapper>
 
-                            <Label for="inputUsername">Username</Label>
+                            <Label htmlFor="inputUsername">Username</Label>
                             <Input id="inputUsername" name="inputUsername" placeholder="Username" value={inputUsername} onChange={this.props.inputChanged} />
 
-                            <Label for="inputEmail">E-Mail</Label>
+                            <Label htmlFor="inputEmail">E-Mail</Label>
                             <Input id="inputEmail" name="inputEmail" type="email" placeholder="E-Mail" value={inputEmail} onChange={this.props.inputChanged} />
 
-                            <Label for="inputPassword">Password</Label>
+                            <Label htmlFor="inputPassword">Password</Label>
                             <Input id="inputPassword" name="inputPassword" type="password" placeholder="Password" value={inputPassword} onChange={this.props.inputChanged} />
 
-                            <Label for="inputPasswordRepeat">Repeat password</Label>
+                            <Label htmlFor="inputPasswordRepeat">Repeat password</Label>
                             <Input id="inputPasswordRepeat" name="inputPasswordRepeat" type="password" placeholder="Confirm Password" value={inputPasswordRepeat} onChange={this.props.inputChanged} />
 
                             <Label>Birthdate</Label>

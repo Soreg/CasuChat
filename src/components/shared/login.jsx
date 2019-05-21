@@ -48,6 +48,7 @@ const Headline = styled.h2`
     font-weight: bold;
     font-size: 28px;
     text-align: center;
+    font-family: 'Nunito', sans-serif;
 `;
 
 const InputWrapper = styled.div`
@@ -159,10 +160,10 @@ class Login extends Component {
                         <Headline>Login</Headline>
                         <InputWrapper>
 
-                            <Label for='email'>E-mail</Label>
+                            <Label htmlFor='email'>E-mail</Label>
                             <Input id='email' name='email' type='email' placeholder="E-mail" value={this.state.email} onChange={this.inputChanged} />
 
-                            <Label for='password'>Password</Label>
+                            <Label htmlFor='password'>Password</Label>
                             <Input id='password' name='password' type='password' placeholder="Password" value={this.state.password} onChange={this.inputChanged} />
 
                         </InputWrapper>
