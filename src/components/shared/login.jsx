@@ -68,14 +68,14 @@ const Input = styled.input`
 const SubmitButton = styled.button`
     &,
     &:focus {
+        padding: 7px 0;
         position: fixed;
-        top: calc(45% + 100px);
+        top: calc(46% + 100px);
         left: 50%;
         transform: translate(-50%, -50%);
         border: none;
         cursor: pointer; 
         width: 350px;
-        height: 30px;
         background: #e79e18;
         color: #fff;
         display: flex;

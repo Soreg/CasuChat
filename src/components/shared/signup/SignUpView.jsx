@@ -65,10 +65,10 @@ const StyledDatePicker = styled(DatePicker)`
 const Button = styled.button`
     &,
     &:focus {
+        padding: 7px 0;
         border: none;
         cursor: pointer; 
         width: 300px;
-        height: 30px;
         background: #e79e18;
         color: #fff;
         display: flex;
