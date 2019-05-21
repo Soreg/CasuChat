@@ -29,7 +29,7 @@ const SignupForm = styled.div`
 const FormHeadline = styled.h2`
     border-bottom: 1px solid #ccc;
     width: 90%;
-    margin: 0 auto 30px;
+    margin: 0 auto 25px;
     padding: 8px 0 4px;
     color: #e79e18;
     font-weight: bold;
@@ -42,13 +42,18 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
     width: 100%;
-    margin: 0 auto 20px;
+    margin: 0 auto 15px;
     height: 24px;
     border: 1px solid #ccc;
     border-radius: 3px;
     outline-color: #e79e18;
     box-sizing: border-box;
     padding-left: 5px;
+`;
+
+const Label = styled.label`
+    font-size: 14px;
+    color: grey;
 `;
 
 const StyledDatePicker = styled(DatePicker)`
@@ -65,10 +70,10 @@ const StyledDatePicker = styled(DatePicker)`
 const Button = styled.button`
     &,
     &:focus {
+        padding: 7px 0;
         border: none;
         cursor: pointer; 
         width: 300px;
-        height: 30px;
         background: #e79e18;
         color: #fff;
         display: flex;
@@ -116,10 +121,20 @@ class Login extends Component{
                             Sign up
                         </FormHeadline>
                         <InputWrapper>
-                            <Input name="inputUsername" placeholder="Username" value={inputUsername} onChange={this.props.inputChanged} />
-                            <Input name="inputEmail" type="email" placeholder="E-Mail" value={inputEmail} onChange={this.props.inputChanged} />
-                            <Input name="inputPassword" type="password" placeholder="Password" value={inputPassword} onChange={this.props.inputChanged} />
-                            <Input name="inputPasswordRepeat" type="password" placeholder="Confirm Password" value={inputPasswordRepeat} onChange={this.props.inputChanged} />
+
+                            <Label for="inputUsername">Username</Label>
+                            <Input id="inputUsername" name="inputUsername" placeholder="Username" value={inputUsername} onChange={this.props.inputChanged} />
+
+                            <Label for="inputEmail">E-Mail</Label>
+                            <Input id="inputEmail" name="inputEmail" type="email" placeholder="E-Mail" value={inputEmail} onChange={this.props.inputChanged} />
+
+                            <Label for="inputPassword">Password</Label>
+                            <Input id="inputPassword" name="inputPassword" type="password" placeholder="Password" value={inputPassword} onChange={this.props.inputChanged} />
+
+                            <Label for="inputPasswordRepeat">Repeat password</Label>
+                            <Input id="inputPasswordRepeat" name="inputPasswordRepeat" type="password" placeholder="Confirm Password" value={inputPasswordRepeat} onChange={this.props.inputChanged} />
+
+                            <Label>Birthdate</Label>
                             <StyledDatePicker selected={inputBirthday} onChange={this.props.pickDate} />
                         </InputWrapper>
                     </SignupForm>
