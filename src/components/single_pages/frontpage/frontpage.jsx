@@ -35,6 +35,7 @@ const Headline = styled.h1`
     color: white;
     font-size: 46px;
     margin-bottom: 150px;
+    font-family: 'Nunito', sans-serif;
 `;
 
 const Subtitle = styled.h3`
