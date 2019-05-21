@@ -42,7 +42,7 @@ const LoginContainer = styled.div`
 const Headline = styled.h2`
     border-bottom: 1px solid #ccc;
     width: 90%;
-    margin: 0 auto 30px;
+    margin: 0 auto 25px;
     padding: 8px 0 4px;
     color: #e79e18;
     font-weight: bold;
@@ -56,7 +56,7 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
     width: 100%;
-    margin: 0 auto 20px;
+    margin: 0 auto 15px;
     height: 24px;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -65,12 +65,17 @@ const Input = styled.input`
     padding-left: 5px;
 `;
 
+const Label = styled.label`
+    font-size: 14px;
+    color: grey;
+`;
+
 const SubmitButton = styled.button`
     &,
     &:focus {
         padding: 7px 0;
         position: fixed;
-        top: calc(46% + 100px);
+        top: calc(47% + 100px);
         left: 50%;
         transform: translate(-50%, -50%);
         border: none;
@@ -153,8 +158,13 @@ class Login extends Component {
                     <LoginContainer>
                         <Headline>Login</Headline>
                         <InputWrapper>
-                            <Input name='email' type='email' placeholder="Email" value={this.state.email} onChange={this.inputChanged} />
-                            <Input name='password' type='password' placeholder="Password" value={this.state.password} onChange={this.inputChanged} />
+
+                            <Label for='email'>E-mail</Label>
+                            <Input id='email' name='email' type='email' placeholder="E-mail" value={this.state.email} onChange={this.inputChanged} />
+
+                            <Label for='password'>Password</Label>
+                            <Input id='password' name='password' type='password' placeholder="Password" value={this.state.password} onChange={this.inputChanged} />
+
                         </InputWrapper>
                     </LoginContainer>
                     <SubmitButton onClick={this.doLogin}>Login</SubmitButton>
