@@ -50,9 +50,35 @@ const ChatInfoUsername = styled.div`
 class ChatView extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            chatMessage: ''
+        }
+
+        this.updateChatMessage = this.updateChatMessage.bind(this);
+        this.onSendMessage = this.onSendMessage.bind(this);
+    }
+
+    updateChatMessage(e) {
+        this.setState({
+            chatMessage: e.target.value
+        })
+    }
+
+    onSendMessage(e) {
+        e.preventDefault();
+
+        const { chatMessage } = this.state;
+
+        if(chatMessage.length > 0) {
+            // Send message to database
+            // Send with username, messageid (for key), timestamp and message
+        }
     }
 
     render(){
+        const { chatMessage } = this.state;
+
         return(
             <>
                 <Head />
@@ -66,7 +92,7 @@ class ChatView extends Component {
                                     <ChatInfoUsername>Logged in as: Soreg</ChatInfoUsername>
                                 </ChatInfoContainer>
                                 <ChatMessageView />
-                                <ChatInput />
+                                <ChatInput chatMessage={chatMessage} updateChatMessage={this.updateChatMessage} onSendMessage={this.onSendMessage} />
                             </ChatInnerContainer>
 
                             <UserList />
