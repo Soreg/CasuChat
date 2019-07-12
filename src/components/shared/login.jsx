@@ -161,10 +161,10 @@ class Login extends Component {
                         <InputWrapper>
 
                             <Label htmlFor='email'>E-mail</Label>
-                            <Input id='email' name='email' type='email' placeholder="E-mail" value={this.state.email} onChange={this.inputChanged} />
+                            <Input id='email' name='email' type='email' value={this.state.email} onChange={this.inputChanged} />
 
                             <Label htmlFor='password'>Password</Label>
-                            <Input id='password' name='password' type='password' placeholder="Password" value={this.state.password} onChange={this.inputChanged} />
+                            <Input id='password' name='password' type='password' value={this.state.password} onChange={this.inputChanged} />
 
                         </InputWrapper>
                     </LoginContainer>
