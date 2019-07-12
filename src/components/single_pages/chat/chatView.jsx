@@ -52,11 +52,40 @@ class ChatView extends Component {
         super(props);
 
         this.state = {
-            chatMessage: ''
+            chatMessage: '',
+            currentChat: null,
+            chatrooms: null
         }
 
         this.updateChatMessage = this.updateChatMessage.bind(this);
         this.onSendMessage = this.onSendMessage.bind(this);
+    }
+
+    componentDidMount() {
+        const { firebase } = this.props;
+        const chatRoomsRef = firebase.db.ref('chatrooms');
+        chatRoomsRef.on('value', snapshot => {
+            const dbChatrooms = snapshot.val();
+            const newState = [];
+            for (let chatroom in dbChatrooms) {
+                const messages = [];
+
+                for (let message in dbChatrooms[chatroom].messages) {
+                    messages.push(dbChatrooms[chatroom].messages[message])
+                }
+                
+                newState.push({
+                    id: chatroom,
+                    title: chatroom,
+                    messages
+                });
+            }
+
+            this.setState({
+                chatrooms: newState,
+                currentChat: newState[0]
+            })
+        })
     }
 
     updateChatMessage(e) {
@@ -67,17 +96,40 @@ class ChatView extends Component {
 
     onSendMessage(e) {
         e.preventDefault();
+        const { chatMessage, currentChat } = this.state;
+        const { firebase } = this.props;
 
-        const { chatMessage } = this.state;
+        const chatRoomsRef = firebase.db.ref(`chatrooms/${currentChat.id}/messages`);
 
+        // Send message to DB
         if(chatMessage.length > 0) {
-            // Send message to database
-            // Send with username, messageid (for key), timestamp and message
+            const auth = firebase ? firebase.auth : null;
+            const user = auth && auth.currentUser ? auth.currentUser : null;
+            const displayName = user ? user.displayName : null;
+
+            const d = new Date();
+            var timestamp = `${d.getHours()}:${d.getMinutes()}`;
+
+            const message = {
+                username: displayName,
+                value: chatMessage,
+                timestamp
+            }
+
+            chatRoomsRef.push(message)
+            this.setState({
+                chatMessage: ''
+            })
         }
     }
 
     render(){
-        const { chatMessage } = this.state;
+        const { chatMessage, chatrooms, currentChat } = this.state;
+        const { firebase } = this.props;
+
+        const auth = firebase ? firebase.auth : null;
+        const user = auth && auth.currentUser ? auth.currentUser : null;
+        const displayName = user ? user.displayName : null;
 
         return(
             <>
@@ -89,9 +141,11 @@ class ChatView extends Component {
 
                             <ChatInnerContainer>
                                 <ChatInfoContainer>
-                                    <ChatInfoUsername>Logged in as: Soreg</ChatInfoUsername>
+                                    {
+                                        user && <ChatInfoUsername>Logged in as: {displayName}</ChatInfoUsername>
+                                    }
                                 </ChatInfoContainer>
-                                <ChatMessageView />
+                                <ChatMessageView chatroom={currentChat} displayName={displayName} />
                                 <ChatInput chatMessage={chatMessage} updateChatMessage={this.updateChatMessage} onSendMessage={this.onSendMessage} />
                             </ChatInnerContainer>
 

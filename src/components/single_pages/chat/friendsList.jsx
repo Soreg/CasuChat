@@ -64,11 +64,7 @@ class FriendsList extends Component {
 }
 
 const FriendsListDummyData = [
-    {
-        id: 1,
-        name: 'Colin',
-        online: true
-    }
+
 ]
 
 export default FriendsList;

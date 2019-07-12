@@ -68,31 +68,7 @@ class UserList extends Component {
 }
 
 const userListDummyData = [
-    {
-        id: 1,
-        name: 'Colin',
-        away: true
-    },
-    {
-        id: 2,
-        name: 'Tudi',
-        away: false
-    },
-    {
-        id: 3,
-        name: 'Nibo',
-        away: true
-    },
-    {
-        id: 4,
-        name: 'Ginger',
-        away: false
-    },
-    {
-        id: 5,
-        name: 'André',
-        away: false
-    }
+
 ]
 
 export default UserList;

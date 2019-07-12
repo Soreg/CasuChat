@@ -35,7 +35,7 @@ class App extends Component{
                <Router>
                <Route exact path={ROUTES.LANDING} component={Frontpage} authUser={this.state.authUser} />
                <Route path={ROUTES.ACCOUNT} component={AccountPageView} authUser={this.state.authUser} />
-               <Route path={ROUTES.CHAT} component={ChatPage} authUser={this.state.authUser} />
+               <Route path={ROUTES.CHAT} component={ChatPageView} authUser={this.state.authUser} />
                </Router>
              </AuthUserContext.Provider>
          </div>
@@ -44,5 +44,6 @@ class App extends Component{
 }
 
 const AccountPageView = withFirebase(AccountPage);
+const ChatPageView = withFirebase(ChatPage);
 
 export default withFirebase(App);
