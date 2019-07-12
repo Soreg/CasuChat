@@ -124,16 +124,16 @@ class Login extends Component{
                         <InputWrapper>
 
                             <Label htmlFor="inputUsername">Username</Label>
-                            <Input id="inputUsername" name="inputUsername" placeholder="Username" value={inputUsername} onChange={this.props.inputChanged} />
+                            <Input id="inputUsername" name="inputUsername"  value={inputUsername} onChange={this.props.inputChanged} />
 
                             <Label htmlFor="inputEmail">E-Mail</Label>
-                            <Input id="inputEmail" name="inputEmail" type="email" placeholder="E-Mail" value={inputEmail} onChange={this.props.inputChanged} />
+                            <Input id="inputEmail" name="inputEmail" type="email" value={inputEmail} onChange={this.props.inputChanged} />
 
                             <Label htmlFor="inputPassword">Password</Label>
-                            <Input id="inputPassword" name="inputPassword" type="password" placeholder="Password" value={inputPassword} onChange={this.props.inputChanged} />
+                            <Input id="inputPassword" name="inputPassword" type="password"  value={inputPassword} onChange={this.props.inputChanged} />
 
                             <Label htmlFor="inputPasswordRepeat">Repeat password</Label>
-                            <Input id="inputPasswordRepeat" name="inputPasswordRepeat" type="password" placeholder="Confirm Password" value={inputPasswordRepeat} onChange={this.props.inputChanged} />
+                            <Input id="inputPasswordRepeat" name="inputPasswordRepeat" type="password" value={inputPasswordRepeat} onChange={this.props.inputChanged} />
 
                             <Label>Birthdate</Label>
                             <StyledDatePicker selected={inputBirthday} onChange={this.props.pickDate} />
