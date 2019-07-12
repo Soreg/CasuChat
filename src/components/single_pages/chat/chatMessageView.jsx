@@ -24,6 +24,7 @@ const ChatMessage = styled.div`
     border: 1px solid #ccc;
     margin: 5px 15px;
     box-shadow: 2px 3px 4px rgba(0,0,0, 0.1);
+    word-break: break-word;
 `;
 
 const ChatMessageName = styled.p`
