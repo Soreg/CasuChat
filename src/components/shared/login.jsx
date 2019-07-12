@@ -133,7 +133,7 @@ class Login extends Component {
                   password: ''
                });
                this.props.hideLoginBox();
-               this.props.history.push(ROUTES.ACCOUNT);
+               this.props.history.push(ROUTES.CHAT);
             })
             .catch(error => {
               this.setState({ error });
