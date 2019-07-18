@@ -8,6 +8,7 @@ import ChatMessageView from './chatMessageView';
 import UserList from './userList';
 import FriendsList from './friendsList';
 import ChatInput from './chatInput';
+import ChatroomDropdown from './chatroomDropdown';
 
 const Wrapper = styled.div`
     display: flex;
@@ -46,14 +47,6 @@ const ChatInfoContainer = styled.div`
 `;
 
 const ChatInfoUsername = styled.div`
-
-`;
-
-const ChatroomDropdown = styled.select`
-    margin-left: auto;
-`;
-
-const ChatroomDropdownOption = styled.option`
 
 `;
 
@@ -179,17 +172,7 @@ class ChatView extends Component {
                                     {
                                         user && <ChatInfoUsername>Logged in as: {displayName}</ChatInfoUsername>
                                     }
-                                    {
-                                        chatrooms && chatrooms.length > 1 && (
-                                            <ChatroomDropdown onChange={(e) => this.onSelectChatroom(e)} value={selectedChatIndex}>
-                                                {
-                                                    chatrooms.map((chatroom, i) => {
-                                                        return <ChatroomDropdownOption value={i} key={chatroom.id} data-chat-id={i}>{chatroom.title}</ChatroomDropdownOption>
-                                                    })
-                                                }
-                                            </ChatroomDropdown>
-                                        )
-                                    }
+                                    <ChatroomDropdown chatrooms={chatrooms} selectedChatIndex={selectedChatIndex} onSelectChatroom={this.onSelectChatroom} />
                                 </ChatInfoContainer>
                                 <ChatMessageView chatroom={currentChat} displayName={displayName} />
                                 <ChatInput chatMessage={chatMessage} updateChatMessage={this.updateChatMessage} onSendMessage={this.onSendMessage} />
