@@ -18,19 +18,15 @@ const Input = styled.input`
 `;
 
 class ChatInput extends Component {
-    constructor(props) {
-        super(props);
-    }
+  render(){
+    const { chatMessage, updateChatMessage, onSendMessage } = this.props;
 
-    render(){
-      const { chatMessage, updateChatMessage, onSendMessage } = this.props;
-
-        return(
-          <InputWrapper onSubmit={onSendMessage}>
-            <Input type="text" value={chatMessage} onChange={updateChatMessage} />
-          </InputWrapper>
-        );
-    }
+      return(
+        <InputWrapper onSubmit={onSendMessage}>
+          <Input type="text" value={chatMessage} onChange={updateChatMessage} />
+        </InputWrapper>
+      );
+  }
 }
 
 export default ChatInput;
