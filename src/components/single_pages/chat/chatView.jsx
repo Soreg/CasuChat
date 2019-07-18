@@ -106,12 +106,6 @@ class ChatView extends Component {
         })
     }
 
-    componentDidUpdate() {
-        const { chatrooms, currentChat } = this.state;
-
-        console.log(chatrooms);
-    }
-
     componentWillUnmount() {
         this._isMounted = false;
     }

@@ -18,17 +18,6 @@ const Input = styled.input`
 `;
 
 class ChatInput extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.sendMessage = this.sendMessage.bind(this);
-  }
-
-  sendMessage(e) {
-    e.preventDefault();
-  }
-
   render(){
     const { chatMessage, updateChatMessage, onSendMessage } = this.props;
 
