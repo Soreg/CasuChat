@@ -68,7 +68,11 @@ class SignUpContainer extends Component {
                     })
                 }
                 this.setState({ ...INITIAL_STATE });
-                this.props.history.push(ROUTES.CHAT);
+            })
+            .then(() => {
+                this.props.firebase.doSendEmailVerification();
+                this.props.firebase.doSignOut();
+                console.info('Please check email for confirmation link'); // Replace with modal or message later
             })
             .catch(error => {
                 this.setState({ error });
