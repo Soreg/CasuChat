@@ -30,6 +30,7 @@ const HeaderLogo = styled.span`
     color: white;
     cursor: default;
     user-select: none;
+    cursor: pointer;
 `
 
 const HeaderRightWrap = styled.div`
@@ -114,7 +115,7 @@ class Header extends Component{
             <>
                 <LoginForm show={this.state.showLoginBox} hideLoginBox={this.hideLoginBox} />
                 <HeaderWrapper>
-                    <HeaderLogo>CasuChat</HeaderLogo>
+                    <HeaderLogo onClick={() => { this.props.history.push(ROUTES.LANDING) }}>CasuChat</HeaderLogo>
                     <HeaderRightWrap>
                         <AuthUserContext.Consumer>
                         {authUser =>
