@@ -68,7 +68,7 @@ class SignUpContainer extends Component {
                     })
                 }
                 this.setState({ ...INITIAL_STATE });
-                this.props.history.push(ROUTES.ACCOUNT);
+                this.props.history.push(ROUTES.CHAT);
             })
             .catch(error => {
                 this.setState({ error });
