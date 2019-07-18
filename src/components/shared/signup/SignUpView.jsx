@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const LoginWrapper = styled.div`
     width: 300px;
@@ -52,20 +50,13 @@ const Input = styled.input`
     padding-left: 5px;
 `;
 
+const RadioInput = styled.input`
+
+`;
+
 const Label = styled.label`
     font-size: 14px;
     color: grey;
-`;
-
-const StyledDatePicker = styled(DatePicker)`
-    width: 100%;
-    margin: 0 auto 20px;
-    height: 24px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    outline-color: #e79e18;
-    box-sizing: border-box;
-    padding-left: 5px;
 `;
 
 const Button = styled.button`
@@ -109,9 +100,8 @@ class Login extends Component{
             inputUsername, 
             inputEmail, 
             inputPassword,
-            inputPasswordRepeat, 
-            inputBirthday
-
+            inputPasswordRepeat,
+            inputAgeAccepted
          } = this.props;
 
         return( 
@@ -135,8 +125,9 @@ class Login extends Component{
                             <Label htmlFor="inputPasswordRepeat">Repeat password</Label>
                             <Input id="inputPasswordRepeat" name="inputPasswordRepeat" type="password" value={inputPasswordRepeat} onChange={this.props.inputChanged} />
 
-                            <Label>Birthdate</Label>
-                            <StyledDatePicker selected={inputBirthday} onChange={this.props.pickDate} />
+                            <RadioInput id="inputAgeAccepted" name="inputAgeAccepted" type="checkbox" checked={inputAgeAccepted} onChange={this.props.onAgeRadioChange} />
+                            <Label htmlFor="inputAgeAccepted">I am 13 or older</Label>
+
                         </InputWrapper>
                     </SignupForm>
                     <Button>Sign up</Button>

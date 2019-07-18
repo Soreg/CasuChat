@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     inputEmail: '',
     inputPassword: '',
     inputPasswordRepeat: '',
-    inputBirthday: new Date()
+    inputAgeAccepted: false
   };
   
 
@@ -20,7 +20,7 @@ class SignUpContainer extends Component {
         this.state = { ...INITIAL_STATE };
 
         this.inputChanged = this.inputChanged.bind(this);
-        this.pickDate = this.pickDate.bind(this);
+        this.onAgeRadioChange = this.onAgeRadioChange.bind(this);
     }
 
     componentDidMount() {
@@ -41,15 +41,15 @@ class SignUpContainer extends Component {
         })
     }
 
-    pickDate(date) {
-        this.setState({
-            birthday: date
+    onAgeRadioChange() {
+        this.setState((prevState) => {
+            return { inputAgeAccepted: !prevState.inputAgeAccepted }
         })
     }
 
     handleSignUp = (e) => {
         e.preventDefault();
-        const { inputUsername, inputEmail, inputPassword, inputPasswordRepeat } = this.state;
+        const { inputUsername, inputEmail, inputPassword, inputPasswordRepeat, inputAgeAccepted } = this.state;
 
         const isInvalid =
         inputPassword !== inputPasswordRepeat ||
@@ -58,7 +58,7 @@ class SignUpContainer extends Component {
         inputUsername === '';
         
         // If passwords match, create account
-        if(!isInvalid) {
+        if(!isInvalid && inputAgeAccepted) {
             this.props.firebase
             .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
             .then(authUser => {
@@ -77,7 +77,7 @@ class SignUpContainer extends Component {
     };
 
     render() {
-        return <SignUpView onSubmit={this.handleSignUp} inputChanged={this.inputChanged} pickDate={this.pickDate} {...this.state} />;
+        return <SignUpView onAgeRadioChange={this.onAgeRadioChange} onSubmit={this.handleSignUp} inputChanged={this.inputChanged} {...this.state} />;
     }
 }
 
