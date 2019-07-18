@@ -3,7 +3,8 @@ import { withFirebase } from '../Firebase';
 import styled from 'styled-components';
 import Login from './login';
 import { AuthUserContext } from '../Session';
-import HeaderBg from '../../img/headerBg.png'
+import HeaderBg from '../../img/headerBg.png';
+import * as ROUTES from '../../constants/routes';
 
 const HeaderWrapper = styled.div`
     position: absolute;
@@ -82,6 +83,7 @@ class Header extends Component{
 
         this.showLoginBox = this.showLoginBox.bind(this);
         this.hideLoginBox = this.hideLoginBox.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
 
     showLoginBox() {
@@ -96,8 +98,18 @@ class Header extends Component{
         })
     }
 
+    handleLogout() {
+        this.props.firebase
+        .doSignOut()
+        .then(() => {
+            this.props.history.push(ROUTES.LANDING);
+        })
+        .catch(error => {
+            this.setState({ error });
+        });
+    }
+
     render() {
-        const { firebase } = this.props;
         return(
             <>
                 <LoginForm show={this.state.showLoginBox} hideLoginBox={this.hideLoginBox} />
@@ -107,7 +119,7 @@ class Header extends Component{
                         <AuthUserContext.Consumer>
                         {authUser =>
                             authUser ? (
-                                <LogoutButton onClick={firebase.doSignOut}>Logout</LogoutButton>
+                                <LogoutButton onClick={this.handleLogout}>Logout</LogoutButton>
                             ) : (
                                 <>
                                     <LoginText>Already got an account ?</LoginText>

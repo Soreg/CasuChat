@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
+import { withRouter } from 'react-router-dom';
 import Header from '../shared/header';
 import Footer from '../shared/footer';
 import { 
@@ -60,6 +61,6 @@ class AccountPage extends Component{
     }
 }
 
-const Head = withFirebase(Header);
+const Head = withRouter(withFirebase(Header));
 
 export default AccountPage;

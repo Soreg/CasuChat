@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withFirebase } from '../../Firebase';
+import { withRouter } from 'react-router-dom';
 import Header from '../../shared/header';
 import Footer from '../../shared/footer';
 import ChatMessageView from './chatMessageView';
@@ -159,6 +160,6 @@ class ChatView extends Component {
     }
 }
 
-const Head = withFirebase(Header);
+const Head = withRouter(withFirebase(Header));
 
 export default ChatView;
