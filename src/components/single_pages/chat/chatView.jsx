@@ -23,6 +23,7 @@ const ChatContainer = styled.div`
     display: flex;
     width: calc(100% - 200px);
     height: calc(100% - 150px);
+    max-width: 1200px;
     background: #f9f9f9;
 `;
 
