@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Signup from '../../shared/signup/index';
 import { withFirebase } from '../../Firebase';
+import { withRouter } from 'react-router-dom';
 import Header from '../../shared/header';
 import Footer from '../../shared/footer';
 
@@ -78,7 +79,7 @@ class Frontpage extends Component {
    }
 }
 
-const Head = withFirebase(Header);
+const Head = withRouter(withFirebase(Header));
 const SignUpForm = withFirebase(Signup);
 
 export default Frontpage;

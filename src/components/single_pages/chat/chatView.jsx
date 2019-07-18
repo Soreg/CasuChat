@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withFirebase } from '../../Firebase';
+import { withRouter } from 'react-router-dom';
 import Header from '../../shared/header';
 import Footer from '../../shared/footer';
 import ChatMessageView from './chatMessageView';
@@ -22,6 +23,7 @@ const ChatContainer = styled.div`
     display: flex;
     width: calc(100% - 200px);
     height: calc(100% - 150px);
+    max-width: 1200px;
     background: #f9f9f9;
 `;
 
@@ -131,7 +133,7 @@ class ChatView extends Component {
         const user = auth && auth.currentUser ? auth.currentUser : null;
         const displayName = user ? user.displayName : null;
 
-        return(
+        return user && (
             <>
                 <Head />
                     <Wrapper>
@@ -159,6 +161,6 @@ class ChatView extends Component {
     }
 }
 
-const Head = withFirebase(Header);
+const Head = withRouter(withFirebase(Header));
 
 export default ChatView;
