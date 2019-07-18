@@ -131,7 +131,7 @@ class ChatView extends Component {
         const user = auth && auth.currentUser ? auth.currentUser : null;
         const displayName = user ? user.displayName : null;
 
-        return(
+        return user && (
             <>
                 <Head />
                     <Wrapper>
