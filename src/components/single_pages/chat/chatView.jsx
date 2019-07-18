@@ -63,11 +63,13 @@ class ChatView extends Component {
     constructor(props) {
         super(props);
 
+        const selectedChatroomIndex = localStorage.getItem('casuchat-selected-chatroomindex');
+
         this.state = {
             chatMessage: '',
             currentChat: null,
             chatrooms: null,
-            selectedChatIndex: 0
+            selectedChatIndex: selectedChatroomIndex > 0 ? selectedChatroomIndex : 0
         }
 
         this.updateChatMessage = this.updateChatMessage.bind(this);
@@ -152,10 +154,12 @@ class ChatView extends Component {
             currentChat: chatrooms[selectedChatIndex],
             selectedChatIndex
         })
+
+        localStorage.setItem('casuchat-selected-chatroomindex', selectedChatIndex)
     }
 
     render(){
-        const { chatMessage, chatrooms, currentChat } = this.state;
+        const { chatMessage, chatrooms, currentChat, selectedChatIndex } = this.state;
         const { firebase } = this.props;
 
         const auth = firebase ? firebase.auth : null;
@@ -177,10 +181,10 @@ class ChatView extends Component {
                                     }
                                     {
                                         chatrooms && chatrooms.length > 1 && (
-                                            <ChatroomDropdown onChange={(e) => this.onSelectChatroom(e)}>
+                                            <ChatroomDropdown onChange={(e) => this.onSelectChatroom(e)} value={selectedChatIndex}>
                                                 {
                                                     chatrooms.map((chatroom, i) => {
-                                                        return <ChatroomDropdownOption key={chatroom.id} data-chat-id={i}>{chatroom.title}</ChatroomDropdownOption>
+                                                        return <ChatroomDropdownOption value={i} key={chatroom.id} data-chat-id={i}>{chatroom.title}</ChatroomDropdownOption>
                                                     })
                                                 }
                                             </ChatroomDropdown>
