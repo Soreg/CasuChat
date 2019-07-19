@@ -8,6 +8,7 @@ import ChatMessageView from './chatMessageView';
 import UserList from './userList';
 import FriendsList from './friendsList';
 import ChatInput from './chatInput';
+import ChatroomDropdown from './chatroomDropdown';
 
 const Wrapper = styled.div`
     display: flex;
@@ -24,6 +25,7 @@ const ChatContainer = styled.div`
     width: calc(100% - 200px);
     height: calc(100% - 150px);
     max-width: 1200px;
+    min-height: 150px;
     background: #f9f9f9;
 `;
 
@@ -45,25 +47,31 @@ const ChatInfoContainer = styled.div`
 `;
 
 const ChatInfoUsername = styled.div`
-    margin-left: auto;
+
 `;
 
 
 class ChatView extends Component {
+    _isMounted = false;
     constructor(props) {
         super(props);
+
+        const selectedChatroomIndex = localStorage.getItem('casuchat-selected-chatroomindex');
 
         this.state = {
             chatMessage: '',
             currentChat: null,
-            chatrooms: null
+            chatrooms: null,
+            selectedChatIndex: selectedChatroomIndex > 0 ? selectedChatroomIndex : 0
         }
 
         this.updateChatMessage = this.updateChatMessage.bind(this);
         this.onSendMessage = this.onSendMessage.bind(this);
+        this.onSelectChatroom = this.onSelectChatroom.bind(this);
     }
 
     componentDidMount() {
+        this._isMounted = true;
         const { firebase } = this.props;
         const chatRoomsRef = firebase.db.ref('chatrooms');
         chatRoomsRef.on('value', snapshot => {
@@ -83,11 +91,18 @@ class ChatView extends Component {
                 });
             }
 
-            this.setState({
-                chatrooms: newState,
-                currentChat: newState[0]
-            })
+            if (this._isMounted) {
+                const { selectedChatIndex } = this.state;
+                this.setState({
+                    chatrooms: newState,
+                    currentChat: newState[selectedChatIndex]
+                })
+            }
         })
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     updateChatMessage(e) {
@@ -125,15 +140,26 @@ class ChatView extends Component {
         }
     }
 
+    onSelectChatroom(e) {
+        const { chatrooms } = this.state;
+        var selectedChatIndex = e.target[e.target.selectedIndex].getAttribute('data-chat-id')
+        this.setState({
+            currentChat: chatrooms[selectedChatIndex],
+            selectedChatIndex
+        })
+
+        localStorage.setItem('casuchat-selected-chatroomindex', selectedChatIndex)
+    }
+
     render(){
-        const { chatMessage, chatrooms, currentChat } = this.state;
+        const { chatMessage, chatrooms, currentChat, selectedChatIndex } = this.state;
         const { firebase } = this.props;
 
         const auth = firebase ? firebase.auth : null;
         const user = auth && auth.currentUser ? auth.currentUser : null;
         const displayName = user ? user.displayName : null;
 
-        return user && (
+        return user && user.emailVerified && (
             <>
                 <Head />
                     <Wrapper>
@@ -146,6 +172,7 @@ class ChatView extends Component {
                                     {
                                         user && <ChatInfoUsername>Logged in as: {displayName}</ChatInfoUsername>
                                     }
+                                    <ChatroomDropdown chatrooms={chatrooms} selectedChatIndex={selectedChatIndex} onSelectChatroom={this.onSelectChatroom} />
                                 </ChatInfoContainer>
                                 <ChatMessageView chatroom={currentChat} displayName={displayName} />
                                 <ChatInput chatMessage={chatMessage} updateChatMessage={this.updateChatMessage} onSendMessage={this.onSendMessage} />

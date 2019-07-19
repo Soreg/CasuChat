@@ -25,7 +25,7 @@ class AccountPage extends Component{
         const auth = firebase ? firebase.auth : null;
         const user = auth && auth.currentUser ? auth.currentUser : null;
 
-        return user && (
+        return user && user.emailVerified && (
             <>
                 <Head />
                 <AccountPageWrapper>
