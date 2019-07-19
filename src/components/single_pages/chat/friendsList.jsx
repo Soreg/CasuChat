@@ -44,7 +44,7 @@ class FriendsList extends Component {
         return(
           <ListContainer>
               <InfoContainer>
-                    Online riends: {amountOnline}
+                    Online friends: {amountOnline}
               </InfoContainer>
               {
                   FriendsListDummyData &&
