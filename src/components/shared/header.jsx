@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Login from './login';
 import { AuthUserContext } from '../Session';
 import HeaderBg from '../../img/headerBg.png';
+import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 
 const HeaderWrapper = styled.div`
@@ -70,6 +71,29 @@ const LoginButton = styled.button`
     }
 `
 
+const LinkButton = styled(Link)`
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 8px 12px;
+    background: #008bcc;
+    margin-right: 40px;
+    box-shadow: 2px 3px 3px transparent;
+    transition: all ease .3s;
+
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 2px 3px 3px black;
+        background: #009de6;
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: 2px 3px 3px transparent;
+        background: #007ab3;
+    }
+`;
+
 const LogoutButton = styled(LoginButton)`
 
 `;
@@ -120,7 +144,10 @@ class Header extends Component{
                         <AuthUserContext.Consumer>
                         {authUser =>
                             authUser ? (
-                                <LogoutButton onClick={this.handleLogout}>Logout</LogoutButton>
+                                <>
+                                    <LinkButton to={ROUTES.CHAT}>To chatrooms</LinkButton>
+                                    <LogoutButton onClick={this.handleLogout}>Logout</LogoutButton>
+                                </>
                             ) : (
                                 <>
                                     <LoginText>Already got an account ?</LoginText>
