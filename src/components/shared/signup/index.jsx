@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import SignUpView from "./SignUpView";
+import InformationModal from "./informationModal";
 import { Link, withRouter } from 'react-router-dom';
-import * as ROUTES from '../../../constants/routes';
 
 const INITIAL_STATE = {
-    show: false,
     inputUsername: '',
     inputEmail: '',
     inputPassword: '',
@@ -17,10 +16,14 @@ class SignUpContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { ...INITIAL_STATE };
+        this.state = { 
+            ...INITIAL_STATE,
+            show: false
+        };
 
         this.inputChanged = this.inputChanged.bind(this);
         this.onAgeRadioChange = this.onAgeRadioChange.bind(this);
+        this.hideInformationModal = this.hideInformationModal.bind(this);
     }
 
     componentDidMount() {
@@ -62,6 +65,7 @@ class SignUpContainer extends Component {
             this.props.firebase
             .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
             .then(authUser => {
+                // Update user with given data
                 if(authUser) {
                     authUser.user.updateProfile({
                         displayName: inputUsername
@@ -70,9 +74,11 @@ class SignUpContainer extends Component {
                 this.setState({ ...INITIAL_STATE });
             })
             .then(() => {
+                // Send email verification
                 this.props.firebase.doSendEmailVerification();
-                this.props.firebase.doSignOut();
-                console.info('Please check email for confirmation link'); // Replace with modal or message later
+                this.setState({
+                    showInformationModal: true
+                })
             })
             .catch(error => {
                 this.setState({ error });
@@ -80,8 +86,19 @@ class SignUpContainer extends Component {
         }
     };
 
+    hideInformationModal() {
+        this.setState({
+            showInformationModal: false
+        })
+    };
+
     render() {
-        return <SignUpView onAgeRadioChange={this.onAgeRadioChange} onSubmit={this.handleSignUp} inputChanged={this.inputChanged} {...this.state} />;
+        return (
+            <>
+                <SignUpView onAgeRadioChange={this.onAgeRadioChange} onSubmit={this.handleSignUp} inputChanged={this.inputChanged} {...this.state} />
+                <InformationModal show={this.state.showInformationModal} hideInformationModal={this.hideInformationModal} />
+            </>
+        )
     }
 }
 
