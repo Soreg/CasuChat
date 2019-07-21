@@ -8,7 +8,13 @@ const INITIAL_STATE = {
     inputEmail: '',
     inputPassword: '',
     inputPasswordRepeat: '',
-    inputAgeAccepted: false
+    inputAgeAccepted: false,
+    validationErrors: {
+        emailFormat: false,
+        emailUsed: false,
+        weakPassword: false,
+        passwordMismatch: false
+    }
   };
   
 
@@ -24,6 +30,7 @@ class SignUpContainer extends Component {
         this.inputChanged = this.inputChanged.bind(this);
         this.onAgeRadioChange = this.onAgeRadioChange.bind(this);
         this.hideInformationModal = this.hideInformationModal.bind(this);
+        this.handleValidationError = this.handleValidationError.bind(this);
     }
 
     componentDidMount() {
@@ -54,14 +61,10 @@ class SignUpContainer extends Component {
         e.preventDefault();
         const { inputUsername, inputEmail, inputPassword, inputPasswordRepeat, inputAgeAccepted } = this.state;
 
-        const isInvalid =
-        inputPassword !== inputPasswordRepeat ||
-        inputPassword === '' ||
-        inputEmail === '' ||
-        inputUsername === '';
+        const passwordsMatch = inputPassword === inputPasswordRepeat;
         
         // If passwords match, create account
-        if(!isInvalid && inputAgeAccepted) {
+        if(passwordsMatch) {
             this.props.firebase
             .doCreateUserWithEmailAndPassword(inputEmail, inputPassword)
             .then(authUser => {
@@ -81,10 +84,38 @@ class SignUpContainer extends Component {
                 })
             })
             .catch(error => {
-                this.setState({ error });
+                const errorCode = error.code;
+
+                this.handleValidationError(errorCode);
             });
+        } else {
+            this.handleValidationError('auth/no-password-match')
         }
     };
+
+    handleValidationError(code) {
+        const validationErrors = Object.assign({}, INITIAL_STATE.validationErrors);
+
+        switch (code) {
+            case 'auth/invalid-email':
+                validationErrors.emailFormat = true
+                break;
+            case 'auth/weak-password':
+                validationErrors.weakPassword = true
+                break;
+            case 'auth/email-already-in-use':
+                validationErrors.emailUsed = true
+                break;
+            case 'auth/no-password-match':
+                validationErrors.passwordMismatch = true
+                break;
+            default: 
+                this.setState({ ...INITIAL_STATE });
+                break;
+        }
+
+        this.setState({ validationErrors })
+    }
 
     hideInformationModal() {
         this.setState({
