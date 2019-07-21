@@ -48,6 +48,7 @@ const Input = styled.input`
     outline-color: #e79e18;
     box-sizing: border-box;
     padding-left: 5px;
+    ${props => props.invalid && `border-color: red`};
 `;
 
 const RadioInput = styled.input`
@@ -55,6 +56,7 @@ const RadioInput = styled.input`
 `;
 
 const Label = styled.label`
+    position: relative;
     font-size: 14px;
     color: grey;
 `;
@@ -92,6 +94,14 @@ const Button = styled.button`
     }
 `;
 
+const ValidationErrorMessage = styled.p`
+    position: absolute;
+    top: 43px;
+    right: 0;
+    color: red;
+    font-size: 12px;
+`;
+
 class Login extends Component{
     render(){
 
@@ -101,7 +111,8 @@ class Login extends Component{
             inputEmail, 
             inputPassword,
             inputPasswordRepeat,
-            inputAgeAccepted
+            inputAgeAccepted,
+            validationErrors
          } = this.props;
 
         return( 
@@ -113,19 +124,35 @@ class Login extends Component{
                         </FormHeadline>
                         <InputWrapper>
 
-                            <Label htmlFor="inputUsername">Username</Label>
-                            <Input id="inputUsername" name="inputUsername"  value={inputUsername} onChange={this.props.inputChanged} />
+                            <Label htmlFor="inputUsername">Username
+                                <Input required id="inputUsername" name="inputUsername"  value={inputUsername} onChange={this.props.inputChanged} />
+                            </Label>
 
-                            <Label htmlFor="inputEmail">E-Mail</Label>
-                            <Input id="inputEmail" name="inputEmail" type="email" value={inputEmail} onChange={this.props.inputChanged} />
+                            <Label htmlFor="inputEmail">E-Mail
+                                <Input required invalid={validationErrors.emailFormat || validationErrors.emailUsed} id="inputEmail" name="inputEmail" type="email" value={inputEmail} onChange={this.props.inputChanged} />
+                                {
+                                    validationErrors.emailFormat && <ValidationErrorMessage>Wrong email format - please try again</ValidationErrorMessage>
+                                }
+                                {
+                                    validationErrors.emailUsed && <ValidationErrorMessage>Email already in use</ValidationErrorMessage>
+                                }
+                            </Label>
 
-                            <Label htmlFor="inputPassword">Password</Label>
-                            <Input id="inputPassword" name="inputPassword" type="password"  value={inputPassword} onChange={this.props.inputChanged} />
+                            <Label htmlFor="inputPassword">Password
+                                <Input required invalid={validationErrors.weakPassword} id="inputPassword" name="inputPassword" type="password"  value={inputPassword} onChange={this.props.inputChanged} />
+                                {
+                                    validationErrors.weakPassword && <ValidationErrorMessage>Password too weak</ValidationErrorMessage>
+                                }
+                            </Label>
 
-                            <Label htmlFor="inputPasswordRepeat">Repeat password</Label>
-                            <Input id="inputPasswordRepeat" name="inputPasswordRepeat" type="password" value={inputPasswordRepeat} onChange={this.props.inputChanged} />
+                            <Label htmlFor="inputPasswordRepeat">Repeat password
+                                <Input invalid={validationErrors.passwordMismatch} required id="inputPasswordRepeat" name="inputPasswordRepeat" type="password" value={inputPasswordRepeat} onChange={this.props.inputChanged} />
+                                {
+                                    validationErrors.passwordMismatch && <ValidationErrorMessage>Passwords doesn't match</ValidationErrorMessage>
+                                }
+                            </Label>
 
-                            <RadioInput id="inputAgeAccepted" name="inputAgeAccepted" type="checkbox" checked={inputAgeAccepted} onChange={this.props.onAgeRadioChange} />
+                            <RadioInput required id="inputAgeAccepted" name="inputAgeAccepted" type="checkbox" checked={inputAgeAccepted} onChange={this.props.onAgeRadioChange} />
                             <Label htmlFor="inputAgeAccepted">I am 13 or older</Label>
 
                         </InputWrapper>
